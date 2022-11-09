@@ -22,6 +22,10 @@ namespace Sow.Data
             builder.Entity<Message>().HasOne(x => x.SenderUser).WithMany(y => y.WriterSender).HasForeignKey(z => z.SenderID).OnDelete(DeleteBehavior.ClientSetNull);
             builder.Entity<Message>().HasOne(x => x.ReceiverUser).WithMany(y => y.WriterReceiver).HasForeignKey(z => z.ReceiverID).OnDelete(DeleteBehavior.ClientSetNull);
 
+            builder.Entity<Event>().HasOne(p => p.AppUser).WithMany(b => b.Events).HasForeignKey(p=>p.AppUserID).OnDelete(DeleteBehavior.Cascade);
+            
+
+
             base.OnModelCreating(builder);
         }
 

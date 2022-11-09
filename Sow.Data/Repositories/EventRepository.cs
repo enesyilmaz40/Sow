@@ -23,7 +23,13 @@ namespace Sow.Data.Repositories
 
         public async Task<IEnumerable<Event>> GetListWithWordByWriter(int id)
         {
-            //return await _context.Events.Include(x=>x.Words).Where(x=>x.)
+            return await _context.Events.Include(x => x.Words).Where(y => y.AppUserID == id).ToListAsync();
+            //throw new NotImplementedException();
         }
+
+        //public async Task<IEnumerable<Event>> GetListWithWordByWriter(int id)
+        //{
+        //    return await _context.Events.Include(x => x.Words).Where(y=>y)
+        //}
     }
 }

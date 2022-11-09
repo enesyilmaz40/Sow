@@ -25,6 +25,10 @@ namespace Sow.Data.Repositories
         public async Task<IEnumerable<Blog>> GetListWithCategoryByWriter(int id)
         {
             return await _context.Blogs.Include(x => x.Category).Where(x => x.AppUserID == id).ToListAsync();
+
+
+
+
         }
     }
 }

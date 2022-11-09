@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sow.Data;
 
 namespace Sow.Data.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20221109153447_mig_mi2")]
+    partial class mig_mi2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -360,7 +362,7 @@ namespace Sow.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AppUserID")
+                    b.Property<int?>("AppUserId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("EventCreateDate")
@@ -381,9 +383,19 @@ namespace Sow.Data.Migrations
                     b.Property<bool>("EventStatus")
                         .HasColumnType("bit");
 
+                    b.Property<int>("OtherEventId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OwnEventId")
+                        .HasColumnType("int");
+
                     b.HasKey("EventId");
 
-                    b.HasIndex("AppUserID");
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("OtherEventId");
+
+                    b.HasIndex("OwnEventId");
 
                     b.ToTable("Events");
                 });
@@ -610,13 +622,23 @@ namespace Sow.Data.Migrations
 
             modelBuilder.Entity("Sow.Core.Models.Event", b =>
                 {
-                    b.HasOne("Sow.Core.Models.AppUser", "AppUser")
+                    b.HasOne("Sow.Core.Models.AppUser", null)
                         .WithMany("Events")
-                        .HasForeignKey("AppUserID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("AppUserId");
+
+                    b.HasOne("Sow.Core.Models.AppUser", "OtherEvent")
+                        .WithMany("OtherEvents")
+                        .HasForeignKey("OtherEventId")
                         .IsRequired();
 
-                    b.Navigation("AppUser");
+                    b.HasOne("Sow.Core.Models.AppUser", "OwnEvent")
+                        .WithMany("OwnEvents")
+                        .HasForeignKey("OwnEventId")
+                        .IsRequired();
+
+                    b.Navigation("OtherEvent");
+
+                    b.Navigation("OwnEvent");
                 });
 
             modelBuilder.Entity("Sow.Core.Models.Message", b =>
@@ -661,6 +683,10 @@ namespace Sow.Data.Migrations
                     b.Navigation("Blogs");
 
                     b.Navigation("Events");
+
+                    b.Navigation("OtherEvents");
+
+                    b.Navigation("OwnEvents");
 
                     b.Navigation("Scores");
 

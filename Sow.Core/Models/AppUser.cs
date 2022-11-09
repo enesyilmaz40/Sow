@@ -28,6 +28,9 @@ namespace Sow.Core.Models
 
 
 
+
+
+
         public virtual ICollection<Message> WriterSender { get; set; }
         public virtual ICollection<Message> WriterReceiver { get; set; }
 

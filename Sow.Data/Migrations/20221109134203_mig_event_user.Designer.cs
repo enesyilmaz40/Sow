@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sow.Data;
 
 namespace Sow.Data.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20221109134203_mig_event_user")]
+    partial class mig_event_user
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -371,9 +373,6 @@ namespace Sow.Data.Migrations
 
                     b.Property<string>("EventImage")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("EventLastDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("EventName")
                         .HasColumnType("nvarchar(max)");
